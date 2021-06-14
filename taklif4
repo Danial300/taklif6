@@ -1,0 +1,88 @@
+#include <iostream>
+#include <fstream>
+#include <string.h>
+#include <vector>
+#include <algorithm>
+using namespace std;
+class Ids
+{
+public:
+    int input()
+    {
+        fstream fileObj;
+        fileObj.open("datas.txt",  ios::in);
+
+        if(fileObj.fail()) {
+            cout<<" file not open"<<endl;
+            exit(1);
+        string fileLine;
+        }
+
+        vector<int> sort;
+        int x;
+        while(fileObj>>x)
+            sort.insert(lower_bound(sort.begin(), sort.end(), x), x);
+    }
+};
+
+class Attack:public Ids
+{
+public:
+
+    Attack()
+    {
+        fstream fileObj;
+        string fileLine;
+        fileObj.open("datas.txt",  ios::in);
+        while(!fileObj.eof()){
+        getline(fileObj , fileLine);
+        if(fileLine.find("[**] [") != std::string::npos){
+
+            cout<<"find"<<endl;
+        }
+    }
+
+
+};
+
+class Block:public Ids
+{
+    Block()
+    {
+        fstream fileObj;
+        fileObj.open("datas.txt",  ios::in);
+        string fileLine;
+        int lineTemp = 0;
+        while(!fileObj.eof()){
+            getline(fileObj , fileLine);
+            if(fileLine.find("[**] [") != std::string::npos){
+                lineTemp = 3;
+            }
+            lineTemp--;
+            if(lineTemp == 0){
+                string blockData;
+                size_t position =0;
+                string delimiter = " ";
+                int blockLineTemp = 2;
+                cout<< fileLine <<endl;
+                while ((position = fileLine.find(delimiter)) != std::string::npos){
+                    blockData = fileLine.substr(0 , position);
+                    blockLineTemp--;
+
+                    if(blockLineTemp == 0)
+                        cout<<blockData<<endl;
+
+                    fileLine.erase(0 , position + delimiter.length());
+            }
+        }
+    }
+    }
+};
+int main()
+{
+    Ids obj;
+    obj.input();
+    Attack obj2;
+    return 0;
+}
+
